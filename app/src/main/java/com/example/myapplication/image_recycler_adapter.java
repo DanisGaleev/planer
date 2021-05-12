@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,11 +51,14 @@ public class image_recycler_adapter extends RecyclerView.Adapter<image_recycler_
         holder.image_cell.setImageResource(personArrayList.get(position).imade_cell_id);
         holder.image_cell_title.setText(personArrayList.get(position).image_cell_title);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceType")
             @Override
             public void onClick(View v) {
-                System.out.println("tttttttt");
-                //new image_builder();
-                System.out.println("uuuuuuuuu");
+                ImageView img = new ImageView(holder.itemView.getContext());
+                img.setImageDrawable(holder.image_cell.getDrawable());
+                img.setX(100);
+                img.setY(100);
+                MainActivity.constraintLayout.addView(img);
             }
         });
     }
