@@ -56,7 +56,7 @@ public class image_recycler_adapter extends RecyclerView.Adapter<image_recycler_
             @SuppressLint("ResourceType")
             @Override
             public void onClick(View v) {
-                MyCustomImage img = new MyCustomImage(holder.itemView.getContext(), holder.image_cell.getId(), constraintLayout);
+                MyCustomImage img = new MyCustomImage(holder.itemView.getContext(), personArrayList.get(position).imade_cell_id, constraintLayout);
             }
         });
     }
