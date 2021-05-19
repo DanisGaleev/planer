@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import static com.example.myapplication.MainActivity.constraintLayout;
+
 //import static com.example.myapplication.MainActivity.constraintLayout;
 
 public class image_recycler_adapter extends RecyclerView.Adapter<image_recycler_adapter.image_cell_recycler_adapter_class> {
@@ -54,11 +56,7 @@ public class image_recycler_adapter extends RecyclerView.Adapter<image_recycler_
             @SuppressLint("ResourceType")
             @Override
             public void onClick(View v) {
-                ImageView img = new ImageView(holder.itemView.getContext());
-                img.setImageDrawable(holder.image_cell.getDrawable());
-                img.setX(100);
-                img.setY(100);
-                MainActivity.constraintLayout.addView(img);
+                MyCustomImage img = new MyCustomImage(holder.itemView.getContext(), holder.image_cell.getId(), constraintLayout);
             }
         });
     }
