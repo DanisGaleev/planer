@@ -77,8 +77,8 @@ public class MyCustomImage extends ImageView {
 
                 System.out.println(mScaleFactor);
                 mScaleFactor -= 0.05;
-                if (mScaleFactor <= 0.5f)
-                    mScaleFactor = 0.5f;
+                if (mScaleFactor <= 0.3f)
+                    mScaleFactor = 0.3f;
                 image.setScaleX(mScaleFactor);
                 image.setScaleY(mScaleFactor);
             }
