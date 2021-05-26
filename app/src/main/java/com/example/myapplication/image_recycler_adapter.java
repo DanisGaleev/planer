@@ -2,42 +2,64 @@ package com.example.myapplication;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import static com.example.myapplication.MainActivity.check1;
 import static com.example.myapplication.MainActivity.constraintLayout;
 
-//import static com.example.myapplication.MainActivity.constraintLayout;
 
 public class image_recycler_adapter extends RecyclerView.Adapter<image_recycler_adapter.image_cell_recycler_adapter_class> {
-    public class image_cell_recycler_adapter_class extends RecyclerView.ViewHolder {
+    class image_cell_recycler_adapter_class extends RecyclerView.ViewHolder {
         ImageView image_cell;
         TextView image_cell_title;
 
-        public image_cell_recycler_adapter_class(@NonNull View itemView) {
+        image_cell_recycler_adapter_class(@NonNull View itemView) {
             super(itemView);
             image_cell = itemView.findViewById(R.id.image_cell);
             image_cell_title = itemView.findViewById(R.id.image_cell_title);
         }
     }
 
-    ArrayList<Image_Cell> personArrayList;
-    Activity activity;
+    private ArrayList<Image_Cell> personArrayList;
+    private Activity activity;
+    private ArrayList<MyCustomImage> addedImages;
 
-    public image_recycler_adapter(ArrayList<Image_Cell> personArrayList, Activity activity) {
+    image_recycler_adapter(ArrayList<Image_Cell> personArrayList, Activity activity, CheckBox r) {
         this.personArrayList = personArrayList;
         this.activity = activity;
+        addedImages = new ArrayList<>();
+        r.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                for (int i = 0; i < addedImages.size(); i++) {
+                    addedImages.get(i).minus.setAlpha(0);
+                    addedImages.get(i).plus.setAlpha(0);
+                    addedImages.get(i).turnImage.setAlpha(0);
+                    addedImages.get(i).deleteImage.setAlpha(0);
+                    check1 = isChecked;
+                }
+            } else {
+                for (int i = 0; i < addedImages.size(); i++) {
+                    addedImages.get(i).minus.setAlpha(255);
+                    addedImages.get(i).plus.setAlpha(255);
+                    addedImages.get(i).turnImage.setAlpha(255);
+                    addedImages.get(i).deleteImage.setAlpha(255);
+                    check1 = isChecked;
+                }
+            }
+            System.out.println("asd" + isChecked);
+        });
     }
 
     @NonNull
@@ -52,12 +74,9 @@ public class image_recycler_adapter extends RecyclerView.Adapter<image_recycler_
     public void onBindViewHolder(@NonNull final image_cell_recycler_adapter_class holder, int position) {
         holder.image_cell.setImageResource(personArrayList.get(position).imade_cell_id);
         holder.image_cell_title.setText(personArrayList.get(position).image_cell_title);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("ResourceType")
-            @Override
-            public void onClick(View v) {
-                MyCustomImage img = new MyCustomImage(holder.itemView.getContext(), personArrayList.get(position).imade_cell_id, constraintLayout);
-            }
+        holder.itemView.setOnClickListener(v -> {
+            MyCustomImage img = new MyCustomImage(holder.itemView.getContext(), personArrayList.get(position).imade_cell_id, constraintLayout);
+            addedImages.add(img);
         });
     }
 
@@ -66,23 +85,4 @@ public class image_recycler_adapter extends RecyclerView.Adapter<image_recycler_
         return personArrayList.size();
     }
 
-   /* public class image_builder extends AppCompatActivity {
-        ImageView img;
-
-        //int img_id;
-        // public image_builder(int img_id) {
-        // this.img_id = img_id;
-        //  }
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-            System.out.println("weaewg");
-            img = new ImageView(getApplicationContext());
-            img.setImageResource(R.drawable.chines);
-            img.setX(100);
-            img.setY(100);
-            constraintLayout.addView(img);
-        }
-    }*/
 }
